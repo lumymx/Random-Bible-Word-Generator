@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Bible Word Generator</title>
+  <style>
+    /* Set background image */
+    body {
+      background-image: url('https://i.imgur.com/Vkf15Es.jpg');
+      background-size: cover;
+    }
+
+    /* Style for the main content area */
+    #content {
+      width: 60%;
+      margin: auto;
+      padding: 2em;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      text-align: center;
+      border-radius: 1em;
+      margin-top: 3em;
+    }
+
+    /* Style for the sentence display area */
+    #sentence {
+      margin: 2em 0;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    /* Style for the button */
+    button {
+      background-color: #ff6f00;
+      color: white;
+      padding: 1em;
+      border: none;
+      border-radius: 0.5em;
+      font-size: 1.2em;
+      margin-top: 1em;
+      cursor: pointer;
+      box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.4);
+      transition: box-shadow 0.2s;
+    }
+
+    button:hover {
+      box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <h1>Random Bible Word Generator</h1>
+    <div id="sentence"></div>
+    <button onclick="generateWord()">Generate Word</button>
+  </div>
+
+  <script>
+    async function generateWord() {
+      const endpoint = 'https://labs.bible.org/api/?passage=random&type=json';
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      const verse = data[0];
+      const words = verse.text.split(' ');
+      const index = Math.floor(Math.random() * words.length);
+      const word = words[index];
+      const sentence = document.getElementById('sentence');
+      if (sentence.innerText) {
+        sentence.innerText += ' ' + word;
+      } else {
+        sentence.innerText = word;
+      }
+    }
+  </script>
+</body>
+</html>
